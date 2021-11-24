@@ -1,0 +1,102 @@
+<html>
+<head>
+
+  <!--
+  <script type="text/javascript" src='https://cdn.bond.tech/sdk/cards/archive/v1.2.0-show-formatting-091dc01dc6d871890ddfdd7ca13d1282c9b6dbb8.js'></script>
+  -->
+
+  <script type="text/javascript" src='https://cdn.bond.tech/sdk/cards/v1/bond-sdk-cards.js'></script>
+  
+  <script src="https://kit.fontawesome.com/bf83d14d06.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/static/styles.css">
+
+</head>
+<body>
+
+  <main>
+    <center>
+    <div class="container">
+
+      <div class="field width100">
+        Bond Customer Id:
+        <div id="customer-id" class="card-field display"></div>
+      </div>
+      <div class="field width100">
+        Bond Card Id:
+        <div id="card-id" class="card-field display"></div>
+      </div>
+      <div class="field width100 footer-font">
+        <a href="https://docs.bond.tech/docs/retrieve-card-details-set-pins-and-reset-pins" target="_blank" rel="noopener noreferrer">
+          Bond Cards SDK documentation
+        </a>
+      </div>
+      <div class="field width100 footer-font">
+        <a href="https://docs.bond.tech/reference" target="_blank" rel="noopener noreferrer">
+          Bond Studio API documentation
+        </a>
+      </div>
+
+      <br/><hr/><br/>
+
+      <!-- show.js function -->
+      <div class="field width100">
+        Card Number:
+        <div id="num" class="card-field"></div>
+      </div>
+      <div class="field row">
+        <div class="field width40">
+          Expiration Date: 
+          <div id="exp" class="card-field"></div>
+        </div>
+        <div class="field width40">
+          CVV2: 
+          <div id="cvv" class="card-field"></div>
+        </div>
+      </div>
+
+      <br/><hr/>
+
+      <!-- show.js function -->
+      <div class="field row">
+        <div class="field width30">
+          Current PIN: 
+          <div id="current-pin" class="card-field"></div>
+        </div>
+        <div class="field width30"></div>
+        <div class="field width20 icon">
+          <i id="view-pin" class="fas fa-eye fa-2x"></i>
+          &nbsp;&nbsp;
+          <i id="reset-pin" class="fas fa-redo fa-1x"></i>
+        </div>
+      </div>
+
+      <br/><hr/>
+
+      <!-- collect.js function -->
+      <form id="set-pin-form">
+      <div class="field row">
+        <div class="field width30">
+          New PIN: 
+          <div id="new-pin" class="card-field"></div>
+        </div>
+        <div class="field width30">
+          Confirm? 
+          <div id="compare-pin" class="card-field"></div>
+        </div>
+        <div class="field width20 icon">
+            <button id="submit" type="submit" class="submit-button">
+              <i class="fas fa-arrow-circle-right fa-2x"></i>
+            </button>
+        </div>
+      </div>
+      </form>
+
+
+    </div>
+    </center>
+  </main>
+
+<script type="text/javascript" src="/static/script.js" ></script>
+
+</body>
+</html>
