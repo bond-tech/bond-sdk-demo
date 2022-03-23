@@ -68,6 +68,7 @@ iframe {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 .icon button {
   padding: 0;

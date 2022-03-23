@@ -1,8 +1,7 @@
-
-const css = { 
-  fontFamily: 'Sans-Serif',
-  fontSize: '1.15em',
-  color: "rgb(96,107,243)" ,
+const css = {
+  fontFamily: "Sans-Serif",
+  fontSize: "1.15em",
+  color: "rgb(96,107,243)",
 };
 
 function successCallback(data) {
@@ -14,15 +13,14 @@ function errorCallback(error) {
 }
 
 function showCard(cards, customerId, cardId) {
-
   console.log(`show card ${cardId} details for customer ${customerId}`);
-  fetch( `/token/${customerId}` )
-    .then( response => response.json() )
-    .then( data => {
-
+  fetch(`/token/${customerId}`)
+    .then((response) => response.json())
+    .then((data) => {
       console.log(data);
 
-      cards.show({
+      cards
+        .show({
           cardId: `${cardId}`,
           identity: data.Identity,
           authorization: data.Authorization,
@@ -34,10 +32,34 @@ function showCard(cards, customerId, cardId) {
             withThis: "$1-$2-$3-$4",
           },
         })
-        .then(successCallback)
+        .then((iframe) => {
+          cards
+            .copy({
+              iframe,
+              htmlSelector: "#copy-card-number",
+              text: '<svg xmlns="http://www.w3.org/2000/svg" height="36" viewBox="0 0 36 36" width="36"><path d="M0 0h24v24H0z" fill="none"/><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>',
+              callback: (status) => {
+                if (status === "success") {
+                  console.log("copied!");
+                } else {
+                  console.log("error!");
+                }
+              },
+              format: {
+                replaceThis: "\\W",
+                withThis: "",
+              },
+              css: {
+                cursor: "pointer",
+              },
+            })
+            .then(successCallback)
+            .catch(errorCallback);
+        })
         .catch(errorCallback);
 
-      cards.show({
+      cards
+        .show({
           cardId: `${cardId}`,
           identity: data.Identity,
           authorization: data.Authorization,
@@ -52,7 +74,8 @@ function showCard(cards, customerId, cardId) {
         .then(successCallback)
         .catch(errorCallback);
 
-      cards.show({
+      cards
+        .show({
           cardId: `${cardId}`,
           identity: data.Identity,
           authorization: data.Authorization,
@@ -62,19 +85,16 @@ function showCard(cards, customerId, cardId) {
         })
         .then(successCallback)
         .catch(errorCallback);
-
-  } );
-
+    });
 }
 
 function viewCardPIN(cards, customerId, cardId) {
-
   console.log(`view card ${cardId} PIN for customer ${customerId}`);
-  fetch( `/token/${customerId}` )
-    .then( response => response.json() )
-    .then( data => {
-
-      cards.showPIN({
+  fetch(`/token/${customerId}`)
+    .then((response) => response.json())
+    .then((data) => {
+      cards
+        .showPIN({
           cardId: `${cardId}`,
           identity: data.Identity,
           authorization: data.Authorization,
@@ -83,20 +103,16 @@ function viewCardPIN(cards, customerId, cardId) {
         })
         .then(successCallback)
         .catch(errorCallback);
-
-  } );
-
+    });
 }
 
 function setCardPIN(cards, customerId, cardId) {
-
   console.log(`set card ${cardId} PIN for customer ${customerId}`);
-  fetch( `/token/${customerId}` )
-    .then( response => response.json() )
-    .then( data => {
-
-      console.log( document.getElementById("new-pin").value )
-      console.log( document.getElementById("current-pin").value )
+  fetch(`/token/${customerId}`)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(document.getElementById("new-pin").value);
+      console.log(document.getElementById("current-pin").value);
 
       cards.submit({
         cardId: `${cardId}`,
@@ -114,19 +130,16 @@ function setCardPIN(cards, customerId, cardId) {
         },
         errorCallback: errorCallback,
       });
-
     });
-
 }
 
 function resetCardPIN(cards, customerId, cardId) {
-
   console.log(`reset card ${cardId} PIN for customer ${customerId}`);
-  fetch( `/token/${customerId}` )
-    .then( response => response.json() )
-    .then( data => {
-
-      cards.showPIN({
+  fetch(`/token/${customerId}`)
+    .then((response) => response.json())
+    .then((data) => {
+      cards
+        .showPIN({
           cardId: `${cardId}`,
           identity: data.Identity,
           authorization: data.Authorization,
@@ -136,56 +149,59 @@ function resetCardPIN(cards, customerId, cardId) {
         })
         .then(successCallback)
         .catch(errorCallback);
-
-  } );
-
+    });
 }
 
 function showSetPinFields(cards, customerId, cardId) {
-
-  cards.field({
+  cards
+    .field({
       selector: "#new-pin",
       type: "new_pin",
       successColor: "#4F8A10",
       errorColor: "#D8000C",
       placeholder: "5678",
-    }).catch(errorCallback);
+    })
+    .catch(errorCallback);
 
-    cards.field({
+  cards
+    .field({
       selector: "#compare-pin",
       type: "confirm_pin",
       successColor: "#4F8A10",
       errorColor: "#D8000C",
       placeholder: "5678",
-    }).catch(errorCallback);
+    })
+    .catch(errorCallback);
 
   document.querySelector("#set-pin-form").addEventListener("submit", (e) => {
     e.preventDefault();
     setCardPIN(cards, customerId, cardId);
   });
-
 }
 
 /* setup */
 
-document.addEventListener("DOMContentLoaded", function(e) {
-
+document.addEventListener("DOMContentLoaded", function (e) {
   let query = {};
-  window.location.search.substring(1).split('&').forEach( kvp => {
-    var pair = kvp.split('=');
-    query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
-  });
+  window.location.search
+    .substring(1)
+    .split("&")
+    .forEach((kvp) => {
+      var pair = kvp.split("=");
+      query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+    });
 
   let cardId = query.card;
-  let customerId = query.customer ? query.customer : "00000000-0000-0000-0000-000000000000";
+  let customerId = query.customer
+    ? query.customer
+    : "00000000-0000-0000-0000-000000000000";
 
-  document.getElementById('customer-id').innerHTML = `${customerId}`;
-  document.getElementById('card-id').innerHTML = `${cardId}`;
+  document.getElementById("customer-id").innerHTML = `${customerId}`;
+  document.getElementById("card-id").innerHTML = `${cardId}`;
 
-  fetch( `/live` )
-    .then( response => response.json() )
-    .then( data => {
-
+  fetch(`/live`)
+    .then((response) => response.json())
+    .then((data) => {
       let live = data.live ? true : false; // assert bool from truthy?
       var cards = new BondCards({ live: live });
 
@@ -193,18 +209,22 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
       showSetPinFields(cards, customerId, cardId);
 
-      document.getElementById('view-pin').addEventListener("click", (e) => {
-        e.preventDefault();
-        viewCardPIN(cards, customerId, cardId);
-      }, false);
+      document.getElementById("view-pin").addEventListener(
+        "click",
+        (e) => {
+          e.preventDefault();
+          viewCardPIN(cards, customerId, cardId);
+        },
+        false
+      );
 
-      document.getElementById('reset-pin').addEventListener("click", (e) => {
-        e.preventDefault();
-        resetCardPIN(cards, customerId, cardId);
-      }, false);
-
+      document.getElementById("reset-pin").addEventListener(
+        "click",
+        (e) => {
+          e.preventDefault();
+          resetCardPIN(cards, customerId, cardId);
+        },
+        false
+      );
     });
-
 });
-
-
