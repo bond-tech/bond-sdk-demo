@@ -38,7 +38,7 @@ poetry run uvicorn app:app --port=8000 --reload
 ```
 (Leave off `--reload` to prevent code changes from sparking server reloads.)  Open a browser to 
 ```
-http://localhost:8000/card/view?card=<your_card_id>&customer=<your_customer_id>
+http://localhost:8000/static/view?card=<your_card_id>&customer=<your_customer_id>
 ```
 where `card_id` is a valid Bond card ID and `customer_id` is a valid Bond customer ID. 
 
