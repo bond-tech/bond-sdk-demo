@@ -19,9 +19,9 @@ RUN apt-get update 1> /dev/null \
     && apt-get install -y --no-install-recommends \
         build-essential python-dev libpq-dev curl netcat vim procps \
         1> /dev/null \
-    && curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py \
+    && curl -sSL https://install.python-poetry.org \
         | python - \
-    && source $HOME/.poetry/env \
+    && PATH="$HOME/.local/bin:$PATH" \
     && poetry config virtualenvs.create false 1> /dev/null \
     && poetry install --no-dev --no-interaction --no-ansi \
     && apt-get remove -y build-essential python-dev 1> /dev/null \
