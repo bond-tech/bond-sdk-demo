@@ -1,3 +1,5 @@
+import sdk from 'https://cdn.skypack.dev/bond-sdk-web';
+
 const css = {
   fontFamily: "Sans-Serif",
   fontSize: "1.15em",
@@ -179,6 +181,25 @@ function showSetPinFields(cards, customerId, cardId) {
   });
 }
 
+function connectExternalAccount(customerId) {
+  fetch(`/token/${customerId}`)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      const bondExternalAccounts = new sdk.BondExternalAccounts({live: false})
+
+      bondExternalAccounts
+        .linkAccount({
+          customerId: customerId,
+          identity: data.Identity,
+          authorization: data.Authorization
+        })
+        .then(successCallback)
+        .catch(errorCallback);
+    })
+    .catch(errorCallback);
+}
+
 /* setup */
 
 document.addEventListener("DOMContentLoaded", function (e) {
@@ -223,6 +244,14 @@ document.addEventListener("DOMContentLoaded", function (e) {
         (e) => {
           e.preventDefault();
           resetCardPIN(cards, customerId, cardId);
+        },
+        false
+      );
+      document.getElementById("connect-external-account-button").addEventListener(
+        "click",
+        (e) => {
+          e.preventDefault();
+          connectExternalAccount(customerId);
         },
         false
       );
