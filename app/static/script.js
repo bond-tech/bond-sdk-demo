@@ -238,6 +238,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
         },
         false
       );
+
       document.getElementById("reset-pin").addEventListener(
         "click",
         (e) => {
@@ -254,5 +255,5 @@ document.addEventListener("DOMContentLoaded", function (e) {
         },
         false
       );
-  });
+    });
 });
