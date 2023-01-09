@@ -10,9 +10,6 @@ body {
   font-size: var(--fontSizeMd);
   line-height: var(--lineHeightMd);
 }
-iframe {
-  max-height: 25px;
-}
 .container {
   width: 350px;
 }
