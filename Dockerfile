@@ -17,7 +17,7 @@ COPY pyproject.toml poetry.lock ./
 # 
 RUN apt-get update 1> /dev/null \
     && apt-get install -y --no-install-recommends \
-        build-essential python-dev libpq-dev curl netcat vim procps \
+        build-essential python3-dev libpq-dev curl netcat-traditional vim procps \
         1> /dev/null \
     && curl -sSL https://install.python-poetry.org \
         | python - \
